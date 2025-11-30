@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contact ThePrime to schedule your free consultation. Get in touch with our virtual assistant team today.">
+    <title>Contact Us - ThePrime Virtual Assistants</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header__wrapper">
+                <div class="header__logo">
+                    <a href="index.html">ThePrime</a>
+                </div>
+
+                <nav class="header__nav" id="navMenu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="services.html" class="nav__link">Services</a>
+                        </li>
+                        <li class="nav__item nav__item--dropdown">
+                            <a href="industries.html" class="nav__link">Industries <span
+                                    class="dropdown-arrow">▾</span></a>
+                            <ul class="dropdown__menu">
+                                <li><a href="industry-real-estate.html">Real Estate Agents</a></li>
+                                <li><a href="industry-roofing.html">Roofing and Construction</a></li>
+                                <li><a href="industry-entrepreneurs.html">Entrepreneurs</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav__item">
+                            <a href="pricing.html" class="nav__link">Pricing</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="faq.html" class="nav__link">FAQ</a>
+                        </li>
+                        <li class="nav__item nav__item--dropdown">
+                            <a href="#" class="nav__link">About <span class="dropdown-arrow">▾</span></a>
+                            <ul class="dropdown__menu">
+                                <li><a href="values.html">Our Values</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+                <a href="contact.html" class="btn btn--primary header__cta">Book a Free Consultation</a>
+
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-hero__title">Let's Talk About Growing Your Business</h1>
+            <p class="page-hero__subtitle">Schedule your free 15-minute consultation and discover how we can help you
+                scale</p>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM SECTION -->
+    <section class="section section--light">
+        <div class="container">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <form class="form">
+                    <div class="form__group">
+                        <label for="contact-name" class="form__label">Full Name *</label>
+                        <input type="text" id="contact-name" class="form__input" placeholder="John Smith" required>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-email" class="form__label">Email Address *</label>
+                        <input type="email" id="contact-email" class="form__input" placeholder="john@example.com"
+                            required>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-phone" class="form__label">Phone Number *</label>
+                        <input type="tel" id="contact-phone" class="form__input" placeholder="(555) 123-4567" required>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-business" class="form__label">Business Name</label>
+                        <input type="text" id="contact-business" class="form__input" placeholder="Your Company Name">
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-industry" class="form__label">Industry *</label>
+                        <select id="contact-industry" class="form__select" required>
+                            <option value="">Select your industry</option>
+                            <option value="real-estate">Real Estate</option>
+                            <option value="roofing">Roofing & Construction</option>
+                            <option value="entrepreneur">Entrepreneur / Solopreneur</option>
+                            <option value="agency">Agency Owner</option>
+                            <option value="coaching">Coaching / Consulting</option>
+                            <option value="local-service">Local Service Business</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-service" class="form__label">What service are you most interested in?
+                            *</label>
+                        <select id="contact-service" class="form__select" required>
+                            <option value="">Select a service</option>
+                            <option value="call-answering">Call Answering</option>
+                            <option value="appointment-setting">Appointment Setting</option>
+                            <option value="lead-management">Lead Management</option>
+                            <option value="all">All Services</option>
+                            <option value="not-sure">Not Sure Yet</option>
+                        </select>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-message" class="form__label">Tell us about your business and what you need
+                            help with</label>
+                        <textarea id="contact-message" class="form__textarea"
+                            placeholder="I'm looking for help with..."></textarea>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-timeline" class="form__label">When would you like to get started?</label>
+                        <select id="contact-timeline" class="form__select">
+                            <option value="">Select a timeframe</option>
+                            <option value="asap">As soon as possible</option>
+                            <option value="1-2-weeks">Within 1-2 weeks</option>
+                            <option value="1-month">Within a month</option>
+                            <option value="exploring">Just exploring options</option>
+                        </select>
+                        <span class="form__error"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary form__submit">Book Free Consultation</button>
+
+                    <p style="text-align: center; margin-top: 1rem; color: #666; font-size: 0.875rem;">
+                        We'll respond within 24 hours to schedule your consultation
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT INFO & SOCIAL -->
+    <section class="section">
+        <div class="container">
+            <div class="section__header text-center">
+                <h2 class="section__title">Other Ways to Reach Us</h2>
+            </div>
+
+            <div class="feature-grid" style="max-width: 800px; margin: 0 auto;">
+                <div class="feature-item">
+                    <div class="feature-item__icon">📧</div>
+                    <h3 class="feature-item__title">Email</h3>
+                    <p class="feature-item__text"><a href="mailto:hello@theprime.com"
+                            style="color: #237BFF; font-weight: 600;">hello@theprime.com</a></p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item__icon">📞</div>
+                    <h3 class="feature-item__title">Phone</h3>
+                    <p class="feature-item__text"><a href="tel:+15551234567"
+                            style="color: #237BFF; font-weight: 600;">(555) 123-4567</a></p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item__icon">💬</div>
+                    <h3 class="feature-item__title">Live Chat</h3>
+                    <p class="feature-item__text">Available Mon-Fri, 9 AM - 6 PM EST</p>
+                </div>
+            </div>
+
+            <div class="social-icons">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                    aria-label="Facebook">
+                    <span style="font-size: 1.5rem;">f</span>
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                    aria-label="Instagram">
+                    <span style="font-size: 1.5rem;">📷</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                    aria-label="LinkedIn">
+                    <span style="font-size: 1.5rem;">in</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__column">
+                    <h3 class="footer__logo">ThePrime</h3>
+                    <p class="footer__description">Professional Virtual Assistant services helping businesses scale
+                        without the overhead.</p>
+                </div>
+
+                <div class="footer__column">
+                    <h4 class="footer__title">Services</h4>
+                    <ul class="footer__links">
+                        <li><a href="services.html">Call Answering</a></li>
+                        <li><a href="services.html">Appointment Setting</a></li>
+                        <li><a href="services.html">Lead Management</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__column">
+                    <h4 class="footer__title">Industries</h4>
+                    <ul class="footer__links">
+                        <li><a href="industry-real-estate.html">Real Estate</a></li>
+                        <li><a href="industry-roofing.html">Roofing & Construction</a></li>
+                        <li><a href="industry-entrepreneurs.html">Entrepreneurs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__column">
+                    <h4 class="footer__title">Company</h4>
+                    <ul class="footer__links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="values.html">Our Values</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p>&copy; 2025 ThePrime. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
