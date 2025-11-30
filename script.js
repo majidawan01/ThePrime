@@ -1,76 +1,193 @@
 // ===================================
-// MOBILE MENU TOGGLE
+// UTILITY FUNCTIONS (Keeping these as you defined them)
 // ===================================
-const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-const navMenu = document.getElementById('navMenu');
 
-if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-    });
+// Debounce function for performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
-// Mobile dropdown toggle
+// Throttle function for scroll events
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+
+// ===================================
+// GLOBAL CONSTANTS
+// ===================================
+const MOBILE_BREAKPOINT = 992; // Consistent with the CSS media query in the previous response
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const navMenu = document.getElementById('navMenu');
 const dropdownItems = document.querySelectorAll('.nav__item--dropdown');
-dropdownItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        if (window.innerWidth <= 968) {
-            e.preventDefault();
-            item.classList.toggle('active');
-        }
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (navMenu && navMenu.classList.contains('active')) {
-        if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-            mobileMenuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-});
-
-// ===================================
-// STICKY HEADER
-// ===================================
 const header = document.getElementById('header');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-    }
-    
-    lastScroll = currentScroll;
-});
-
-// ===================================
-// INDUSTRIES SLIDER
-// ===================================
 const sliderTrack = document.getElementById('industriesTrack');
 const sliderPrev = document.getElementById('sliderPrev');
 const sliderNext = document.getElementById('sliderNext');
 
+
+// ===================================
+// MOBILE MENU & DROPDOWN LOGIC (Refined)
+// ===================================
+
+/**
+ * Handles the click event for the mobile menu toggle (hamburger).
+ */
+function toggleMobileMenu() {
+    if (navMenu) {
+        // Use the CSS class names from the previous response: header__nav--active and is-active
+        navMenu.classList.toggle('header__nav--active');
+        mobileMenuToggle.classList.toggle('is-active');
+
+        const isOpen = navMenu.classList.contains('header__nav--active');
+        // Prevent body scrolling when menu is open on mobile
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+
+        // Close all dropdowns when the main menu is closed
+        if (!isOpen) {
+            dropdownItems.forEach(item => item.classList.remove('dropdown-open'));
+        }
+    }
+}
+
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+/**
+ * Handles the click event for dropdowns in mobile view.
+ */
+dropdownItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        // Use consistent breakpoint check (or match the CSS breakpoint)
+        if (window.innerWidth <= MOBILE_BREAKPOINT) {
+            e.preventDefault();
+            
+            // Close other open dropdowns in the mobile menu
+            dropdownItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('dropdown-open');
+                }
+            });
+
+            // Toggle the current dropdown's state
+            item.classList.toggle('dropdown-open');
+        }
+        // Note: Desktop behavior is handled purely by CSS hover, so no else{} block is needed.
+    });
+});
+
+/**
+ * Closes mobile menu when clicking outside of the menu or toggle button.
+ */
+document.addEventListener('click', (e) => {
+    if (navMenu && navMenu.classList.contains('header__nav--active')) {
+        // Check if the click target is NOT the menu, NOT the toggle button, and NOT a child of either
+        const clickedInsideMenu = navMenu.contains(e.target);
+        const clickedToggle = mobileMenuToggle.contains(e.target);
+        
+        if (!clickedInsideMenu && !clickedToggle) {
+            // Use the function to centralize menu closing logic
+            toggleMobileMenu();
+        }
+    }
+});
+
+// --- Window Resize Handler (New/Improved) ---
+/**
+ * Ensures mobile menu is closed when resizing back to desktop view.
+ */
+function handleResize() {
+    if (window.innerWidth > MOBILE_BREAKPOINT) {
+        if (navMenu && navMenu.classList.contains('header__nav--active')) {
+             // Use the function to centralize menu closing logic
+             toggleMobileMenu(); 
+        }
+        // Ensure desktop dropdowns are closed if they were left open (active is used for mobile CSS, so this is fine)
+        dropdownItems.forEach(item => item.classList.remove('dropdown-open'));
+    }
+}
+
+// Apply debounce to the resize event listener for performance
+window.addEventListener('resize', debounce(handleResize, 150));
+
+
+// ===================================
+// STICKY HEADER (Optimized with Throttle)
+// ===================================
+
+let lastScroll = 0;
+
+function updateHeaderOnScroll() {
+    const currentScroll = window.pageYOffset;
+    
+    if (header) {
+        // Toggle shadow based on scroll position (keep as is)
+        if (currentScroll > 100) {
+            header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        }
+        
+        // Optional: Hide/Show header on scroll down/up (if you want this feature)
+        /*
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            // Scrolling down
+            header.classList.add('header--hidden');
+        } else {
+            // Scrolling up or near the top
+            header.classList.remove('header--hidden');
+        }
+        */
+    }
+    
+    lastScroll = currentScroll;
+}
+
+// Apply throttle to the scroll event for better performance
+window.addEventListener('scroll', throttle(updateHeaderOnScroll, 100));
+
+
+// ===================================
+// INDUSTRIES SLIDER (Keeping original logic)
+// ===================================
 if (sliderTrack && sliderPrev && sliderNext) {
     let currentPosition = 0;
     const slideWidth = 320; // 300px + 20px gap
+
+    const updateSlider = () => {
+        sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+    };
     
+    const calculateMaxScroll = () => {
+        return sliderTrack.scrollWidth - sliderTrack.parentElement.offsetWidth;
+    };
+
     sliderNext.addEventListener('click', () => {
-        const maxScroll = sliderTrack.scrollWidth - sliderTrack.parentElement.offsetWidth;
+        const maxScroll = calculateMaxScroll();
         if (currentPosition > -maxScroll) {
             currentPosition -= slideWidth;
             if (currentPosition < -maxScroll) {
                 currentPosition = -maxScroll;
             }
-            sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+            updateSlider();
         }
     });
     
@@ -80,47 +197,53 @@ if (sliderTrack && sliderPrev && sliderNext) {
             if (currentPosition > 0) {
                 currentPosition = 0;
             }
-            sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+            updateSlider();
         }
     });
     
-    // Auto-slide (optional)
+    // Auto-slide 
     let autoSlide = setInterval(() => {
-        const maxScroll = sliderTrack.scrollWidth - sliderTrack.parentElement.offsetWidth;
-        if (currentPosition > -maxScroll) {
+        const maxScroll = calculateMaxScroll();
+        if (currentPosition <= -maxScroll) {
+            // Reset to 0 if at the end
+            currentPosition = 0;
+        } else {
+            // Move to next slide
             currentPosition -= slideWidth;
             if (currentPosition < -maxScroll) {
                 currentPosition = -maxScroll;
             }
-        } else {
-            currentPosition = 0;
         }
-        sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+        updateSlider();
     }, 4000);
     
     // Pause auto-slide on hover
     sliderTrack.parentElement.addEventListener('mouseenter', () => {
         clearInterval(autoSlide);
+        autoSlide = null;
     });
     
     sliderTrack.parentElement.addEventListener('mouseleave', () => {
-        autoSlide = setInterval(() => {
-            const maxScroll = sliderTrack.scrollWidth - sliderTrack.parentElement.offsetWidth;
-            if (currentPosition > -maxScroll) {
-                currentPosition -= slideWidth;
-                if (currentPosition < -maxScroll) {
-                    currentPosition = -maxScroll;
+        if (!autoSlide) {
+             autoSlide = setInterval(() => {
+                const maxScroll = calculateMaxScroll();
+                if (currentPosition <= -maxScroll) {
+                    currentPosition = 0;
+                } else {
+                    currentPosition -= slideWidth;
+                    if (currentPosition < -maxScroll) {
+                        currentPosition = -maxScroll;
+                    }
                 }
-            } else {
-                currentPosition = 0;
-            }
-            sliderTrack.style.transform = `translateX(${currentPosition}px)`;
-        }, 4000);
+                updateSlider();
+            }, 4000);
+        }
     });
 }
 
+
 // ===================================
-// FAQ ACCORDION
+// FAQ ACCORDION (Keeping original logic)
 // ===================================
 const faqQuestions = document.querySelectorAll('.faq-item__question');
 
@@ -142,7 +265,7 @@ faqQuestions.forEach(question => {
 });
 
 // ===================================
-// FORM VALIDATION
+// FORM VALIDATION (Keeping original logic)
 // ===================================
 const forms = document.querySelectorAll('form');
 
@@ -276,12 +399,12 @@ forms.forEach(form => {
 });
 
 // ===================================
-// SMOOTH SCROLL FOR ANCHOR LINKS
+// SMOOTH SCROLL FOR ANCHOR LINKS (Refined)
 // ===================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        if (href !== '#' && href !== '#!') {
+        if (href && href !== '#' && href !== '#!') {
             e.preventDefault();
             const target = document.querySelector(href);
             if (target) {
@@ -291,10 +414,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 });
                 
                 // Close mobile menu if open
-                if (navMenu && navMenu.classList.contains('active')) {
-                    mobileMenuToggle.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    document.body.style.overflow = '';
+                if (navMenu && navMenu.classList.contains('header__nav--active')) {
+                    // Use the function to centralize menu closing logic
+                    toggleMobileMenu();
                 }
             }
         }
@@ -302,7 +424,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ===================================
-// SCROLL ANIMATIONS
+// SCROLL ANIMATIONS (Keeping original logic)
 // ===================================
 const observerOptions = {
     threshold: 0.1,
@@ -314,6 +436,7 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target); // Stop observing once animated
         }
     });
 }, observerOptions);
@@ -328,7 +451,7 @@ animateElements.forEach(el => {
 });
 
 // ===================================
-// PRICING TOGGLE (if needed for monthly/yearly)
+// PRICING TOGGLE (if needed for monthly/yearly) (Keeping original logic)
 // ===================================
 const pricingToggle = document.getElementById('pricingToggle');
 if (pricingToggle) {
@@ -350,45 +473,14 @@ if (pricingToggle) {
 }
 
 // ===================================
-// LOADING ANIMATION
+// LOADING ANIMATION (Keeping original logic)
 // ===================================
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
 
 // ===================================
-// UTILITY FUNCTIONS
-// ===================================
-
-// Debounce function for performance
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Throttle function for scroll events
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// ===================================
-// PERFORMANCE OPTIMIZATIONS
+// PERFORMANCE OPTIMIZATIONS (Keeping original logic)
 // ===================================
 
 // Lazy load images

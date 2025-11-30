@@ -14,10 +14,17 @@
     --white: #FFFFFF;
     --light-grey: #F6F7FB;
     
+    /* New Color Theme */
+    --warm-yellow: #FFC107;
+    --dark-charcoal: #1A1A1A;
+    --deep-red: #E53935;
+    --soft-yellow: #FFF9E5;
+    
     /* Additional Colors */
     --dark-overlay: rgba(14, 30, 58, 0.85);
     --gradient-start: #0E1E3A;
     --gradient-end: #1a3a5c;
+    --gradient-blue-yellow: linear-gradient(135deg, #237BFF 0%, #FFC107 100%);
     
     /* Typography */
     --font-heading: 'Montserrat', sans-serif;
@@ -97,6 +104,10 @@ ul {
     color: var(--white);
 }
 
+.section--soft-yellow {
+    background-color: var(--soft-yellow);
+}
+
 .section__header {
     margin-bottom: var(--spacing-lg);
 }
@@ -107,6 +118,20 @@ ul {
     font-weight: 800;
     margin-bottom: var(--spacing-sm);
     line-height: 1.2;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--warm-yellow);
+    border-radius: 2px;
 }
 
 .section__subtitle {
@@ -136,11 +161,12 @@ ul {
     background-color: var(--electric-blue);
     color: var(--white);
     border-color: var(--electric-blue);
+    background: linear-gradient(135deg, var(--electric-blue) 0%, #1a66e0 100%);
 }
 
 .btn--primary:hover {
-    background-color: #1a66e0;
-    border-color: #1a66e0;
+    background: linear-gradient(135deg, #1a66e0 0%, var(--warm-yellow) 100%);
+    border-color: var(--warm-yellow);
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(35, 123, 255, 0.3);
 }
@@ -517,6 +543,171 @@ ul {
 
 
 
+/* feature section new  */
+
+/* --- CSS VARIABLES (Based on Framer Styles) --- */
+:root {
+    --primary-color: rgb(213, 11, 62); /* Framer's Red/Pink accent color */
+    --text-dark: rgb(18, 18, 23); /* Heading/Title color */
+    --text-muted: rgb(108, 108, 137); /* Paragraph text color */
+    --button-bg: rgb(255, 84, 34); /* Button primary color (Orange) */
+    --button-shadow-color: rgb(217, 165, 43); /* Button secondary color (Yellow/Gold) */
+    --bg-white: rgb(255, 255, 255);
+    
+    /* Font definitions (Placeholders for custom fonts) */
+    /* Note: You must link these fonts in your project for them to work */
+    --font-heading: 'Circular Pro Book', sans-serif; 
+    --font-body: 'Inter Regular', sans-serif;
+    --font-medium: 'Inter Medium', sans-serif;
+}
+
+/* --- Layout Container --- */
+.features-section {
+    padding: 60px 0;
+    font-family: var(--font-body);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- Feature Grid --- */
+.feature-grid {
+    display: grid;
+    /* 3 columns on desktop, adapts to 2 or 1 column on smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* --- Feature Item Styling --- */
+.feature-item {
+    padding: 40px 30px;
+    border-radius: 12px;
+    background-color: var(--bg-white);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    /* Framer structure had items 1-3, 5-6, and 9 with white background, 4, 7, 8 implied a different background color, 
+       but for simplicity and based on the provided style properties, we keep it white by default. */
+}
+
+.feature-item:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    /* light bg bg color */
+    background-color: var(--bg-white)/2;
+    /* Framer structure had items 1-3, 5-6, and 9 with white background, 4, 7, 8 implied a different background color, 
+       but for simplicity and based on the provided style properties, we keep it white by default. */
+}
+/* --- Feature Number (01, 02, etc.) --- */
+.feature-number h5 {
+    font-family: var(--font-medium);
+    font-size: 14px; /* ~0.88rem */
+    font-weight: 500;
+    line-height: 1.6em;
+    color: var(--primary-color);
+    margin: 0 0 10px 0;
+}
+
+/* --- Feature Title (h4) --- */
+.feature-content h4 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    letter-spacing: -0.48px;
+    line-height: 28.8px;
+    color: var(--text-dark);
+    margin: 0 0 15px 0;
+}
+
+/* --- Feature Description (p) --- */
+.feature-content p {
+    font-family: var(--font-body);
+    font-size: 18px;
+    letter-spacing: 0px;
+    line-height: 30.6px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+
+/* --- Call-to-Action Button Styling --- */
+.cta-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.cta-button {
+    /* Base style for the button element */
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px; /* Base padding for the whole link wrapper */
+    border-radius: 40px;
+    background-color: var(--button-shadow-color); /* Yellow/Gold shadow background */
+    box-shadow: none;
+    transition: transform 0.2s ease-out;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Inner frame styling (the orange block) */
+.cta-button > .cta-text,
+.cta-button > .cta-arrow {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 15px 30px; /* Padding for the orange area */
+    background-color: var(--button-bg); /* Orange color */
+    border-radius: 50px;
+    transition: background-color 0.2s;
+}
+
+.cta-text {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    color: var(--bg-white);
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.cta-arrow {
+    /* Arrow is part of the inner orange block, adjust padding/margin */
+    width: 14px;
+    height: 14px;
+    margin-right: 15px; /* Spacing from text */
+}
+
+/* Adjust the arrow position when the button is structured as above 
+   (The Framer example structure is complex, this simplifies it) */
+.cta-button > .cta-text {
+    padding-right: 15px; /* Adjust text padding */
+}
+
+.cta-button > .cta-arrow {
+    background: none;
+    padding: 0;
+    margin-right: 0; /* Align arrow to the edge of the orange background */
+    margin-left: -5px; /* Pull arrow back slightly for better centering */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -568,7 +759,19 @@ ul {
     padding: 2rem;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     transition: var(--transition-normal);
-    border-left: 4px solid var(--electric-blue);
+    border-left: 4px solid var(--warm-yellow);
+    position: relative;
+}
+
+.benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--electric-blue);
+    border-radius: 0 12px 12px 0;
 }
 
 .benefit-card:hover {
@@ -634,6 +837,8 @@ ul {
 .glass-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
+    color: var(--warm-yellow);
+    filter: drop-shadow(0 2px 4px rgba(255, 193, 7, 0.3));
 }
 
 .glass-card h3 {
@@ -675,11 +880,13 @@ ul {
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     transition: var(--transition-normal);
+    border-top: 4px solid var(--warm-yellow);
 }
 
 .industry-slide:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    border-top-color: var(--electric-blue);
 }
 
 .industry-slide__image {
@@ -746,7 +953,7 @@ ul {
    =================================== */
 .cta-section {
     padding: var(--spacing-xxl) 0;
-    background: linear-gradient(135deg, var(--electric-blue) 0%, #1a66e0 100%);
+    background: linear-gradient(135deg, var(--electric-blue) 0%, #1a66e0 50%, var(--warm-yellow) 100%);
 }
 
 .cta-box {
@@ -924,15 +1131,18 @@ ul {
     transition: var(--transition-normal);
     border: 3px solid transparent;
     text-align: center;
+    border-top: 4px solid var(--warm-yellow);
 }
 
 .pricing-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-top-color: var(--electric-blue);
 }
 
 .pricing-card--featured {
     border-color: var(--electric-blue);
+    background: linear-gradient(135deg, var(--soft-yellow) 0%, var(--white) 100%);
     transform: scale(1.05);
 }
 
@@ -1054,7 +1264,8 @@ ul {
 .faq-item__icon {
     font-size: 1.5rem;
     transition: var(--transition-normal);
-    color: var(--electric-blue);
+    color: var(--warm-yellow);
+    font-weight: bold;
 }
 
 .faq-item.active .faq-item__icon {
@@ -1086,7 +1297,7 @@ ul {
     padding: 3rem 0 3.5rem;
     margin-top: 70px;
     text-align: center;
-    border-bottom: 4px solid var(--white);
+    border-bottom: 4px solid var(--warm-yellow);
     border-radius: 0 0 20px 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -1097,6 +1308,20 @@ ul {
     font-weight: 800;
     margin-bottom: 1.25rem;
     line-height: 1.2;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.page-hero__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--electric-blue), var(--warm-yellow));
+    border-radius: 2px;
 }
 
 .page-hero__subtitle {
@@ -1118,11 +1343,26 @@ ul {
 .feature-item {
     text-align: center;
     padding: 2rem;
+    position: relative;
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--warm-yellow);
+    border-radius: 50%;
 }
 
 .feature-item__icon {
     font-size: 3rem;
     margin-bottom: 1rem;
+    color: var(--electric-blue);
+    filter: drop-shadow(0 4px 8px rgba(35, 123, 255, 0.15));
 }
 
 .feature-item__title {
@@ -1206,15 +1446,17 @@ ul {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: var(--electric-blue);
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--warm-yellow) 100%);
     color: var(--white);
     font-size: 1.5rem;
     transition: var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(35, 123, 255, 0.2);
 }
 
 .social-icon:hover {
-    background-color: var(--navy-blue);
+    background: linear-gradient(135deg, var(--navy-blue) 0%, var(--electric-blue) 100%);
     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(35, 123, 255, 0.3);
 }
 
 /* ===================================
@@ -1262,52 +1504,44 @@ ul {
     color: #555;
     line-height: 1.7;
 } */
-/* Placeholder Variables (Must be defined) */
-/* Placeholder Variables (Must be defined) */
-:root {
-    --accent-color: #1e8449; /* E.g., a corporate green */
-    --step-bg-color: #f7f9fc;
-    --text-color-dark: #333;
-}
-
 .timeline {
     position: relative;
-    padding-left: 0; /* Remove padding */
+    padding-left: 0;
     max-width: 900px;
     margin: 0 auto;
-    list-style: none; /* Remove default list style */
+    list-style: none;
 }
 
 .timeline:before {
-    /* Remove vertical line */
     content: none;
 }
 
 .timeline-step {
     margin-bottom: 1.5rem;
     padding: 25px;
-    background: var(--step-bg-color);
+    background: var(--light-grey);
     border-radius: 8px;
-    display: flex; /* Use flexbox for step number/icon */
+    display: flex;
     align-items: flex-start;
     gap: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     transition: background 0.3s, transform 0.3s;
+    border-left: 4px solid var(--warm-yellow);
     animation: none;
 }
 
 .timeline-step:hover {
-    background: white;
+    background: var(--soft-yellow);
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-left-color: var(--electric-blue);
 }
 
 .timeline-step .dot {
-    /* The dot is now the Step Number/Icon */
     flex-shrink: 0;
     width: 40px;
     height: 40px;
-    background: var(--accent-color);
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--warm-yellow) 100%);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -1315,36 +1549,44 @@ ul {
     align-items: center;
     font-size: 1.25rem;
     font-weight: 700;
-    /* Use the CSS counter to display the step number */
-    content: counter(step-counter);
-    counter-increment: step-counter;
+    box-shadow: 0 4px 12px rgba(35, 123, 255, 0.3);
 }
 
-/* Set up the counter on the parent list */
 .timeline {
     counter-reset: step-counter;
 }
 
-/* HTML adjustment: Move step number to CSS using counters */
 .timeline-step .dot:before {
     content: counter(step-counter);
+    counter-increment: step-counter;
 }
-/* You can remove the empty <div class="dot"></div> from the HTML if you use :before on .timeline-step, 
-   or keep it and style it as the step number as done here. */
 
 .timeline-step h3 {
     font-size: 1.4rem;
     font-weight: 600;
-    color: var(--accent-color);
+    color: var(--navy-blue);
     margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.timeline-step h3:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--warm-yellow);
+    border-radius: 2px;
 }
 
 .timeline-step p {
-    color: var(--text-color-dark);
+    color: var(--dark-charcoal);
     line-height: 1.7;
+    margin: 0;
 }
 
-/* Responsive (Ensure good stacking on mobile) */
 @media (max-width: 640px) {
     .timeline-step {
         padding: 20px;
@@ -1381,28 +1623,29 @@ ul {
     text-align: center;
     padding: 1.5rem;
     background-color: var(--white);
-    border: 1px solid #eee; /* Added a subtle border for extra definition */
+    border: 1px solid #eee;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     transition: var(--transition-normal);
-    /* Ensure items have a fixed aspect ratio or height if needed, but not strictly required here. */
+    border-top: 3px solid var(--warm-yellow);
 }
 
 .logo-grid__item img {
     /* Critical style to make the logos scale and fit */
     display: block;
-    max-width: 80%; /* Ensure logo is not too wide */
-    max-height: 50px; /* Optional: Set a max height for consistent visual size */
+    max-width: 80%;
+    max-height: 50px;
     height: auto;
     width: auto;
-    margin: 0 auto; /* Center the image */
-    object-fit: contain; /* Ensure the image scales without being cropped */
+    margin: 0 auto;
+    object-fit: contain;
     transition: all 0.3s;
 }
 
 .logo-grid__item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-top-color: var(--electric-blue);
 }
 
 .logo-grid__item:hover img {
